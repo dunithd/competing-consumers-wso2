@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxy name="TaskProcessorProxy" startOnLoad="true" transports="rabbitmq" xmlns="http://ws.apache.org/ns/synapse">
+    <target>
+        <inSequence>
+            <log level="custom">
+                <property expression="//Message/ID" name="[x] Message Received. ID: "/>
+            </log>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </target>
+    <parameter name="rabbitmq.queue.auto.ack">false</parameter>
+    <parameter name="rabbitmq.channel.consumer.qos">1</parameter>
+    <parameter name="rabbitmq.queue.name">tasks</parameter>
+    <parameter name="rabbitmq.connection.factory">AMQPConnectionFactory</parameter>
+    <parameter name="rabbitmq.message.content.type">application/xml</parameter>
+</proxy>
